@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hasan Mahdi · Launching soon</title>
+<meta name="description" content="Hasan Mahdi builds digital systems for companies and organizations in Iraq. Launching soon. Reach out on WhatsApp or by phone.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Hasan Mahdi · Launching soon">
+<meta property="og:description" content="I build digital systems for companies and organizations in Iraq. The full site is launching soon.">
+<meta property="og:url" content="https://hasnmahdi.com/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hasnmahdi.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Hasan Mahdi, launching soon">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://hasnmahdi.com/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ffffff'/%3E%3Cg fill='none' stroke='%2322211c' stroke-width='5'%3E%3Cpath d='M22 88V50a28 28 0 0 1 56 0v38M36 88V54a14 14 0 0 1 28 0v34M12 88h76'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preload" href="fonts/gloock-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face { font-family: "Gloock"; font-weight: 400; font-display: swap; src: url(fonts/gloock-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Montserrat"; font-weight: 400; font-display: swap; src: url(fonts/montserrat-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Montserrat"; font-weight: 500; font-display: swap; src: url(fonts/montserrat-latin-500-normal.woff2) format("woff2"); }
+
+  :root {
+    --paper: #ffffff;
+    --grid: #f1efea;
+    --grid-major: #e6e2d9;
+    --cell: 44px;
+    --ink: #22211c;
+    --ink-soft: #55524a;
+    --ease: cubic-bezier(.22, 1, .36, 1);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh; min-height: 100dvh;
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: "Montserrat", system-ui, sans-serif;
+    overflow: hidden;
+  }
+  /* graph-paper grid, fading out toward the edges */
+  .grid {
+    position: fixed; inset: 0; pointer-events: none; overflow: hidden;
+    background-image:
+      linear-gradient(var(--grid-major) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:
+      calc(var(--cell) * 4) calc(var(--cell) * 4),
+      calc(var(--cell) * 4) calc(var(--cell) * 4),
+      var(--cell) var(--cell),
+      var(--cell) var(--cell);
+    background-position: 0 0;
+    -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 46%, #000 0%, rgba(0,0,0,.55) 55%, transparent 92%);
+            mask-image: radial-gradient(ellipse 75% 70% at 50% 46%, #000 0%, rgba(0,0,0,.55) 55%, transparent 92%);
+  }
+  /* cells that quietly light up across the sheet */
+  .cell {
+    position: absolute; width: var(--cell); height: var(--cell);
+    background: #f6f3ec; outline: 1px solid var(--grid-major); outline-offset: -1px;
+    animation: blink 3.2s ease-in-out both;
+  }
+  .cell.ink { background: var(--ink); outline: 0; animation-name: blinkInk; }
+  @keyframes blink { 0%, 100% { opacity: 0; } 30%, 60% { opacity: 1; } }
+  @keyframes blinkInk { 0%, 100% { opacity: 0; } 30%, 60% { opacity: .55; } }
+  /* a soft clearing behind the words so they stay crisp on the grid */
+  .glow {
+    position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 42% 40% at 50% 48%, #fff 0%, rgba(255,255,255,.85) 45%, rgba(255,255,255,0) 100%);
+  }
+  /* corner ticks, like a drafting sheet */
+  .ticks { position: fixed; inset: clamp(14px, 2.4vw, 26px); pointer-events: none; }
+  .ticks i { position: absolute; width: 18px; height: 18px; border-color: var(--ink); border-style: solid; border-width: 0; opacity: .55; }
+  .ticks i:nth-child(1) { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
+  .ticks i:nth-child(2) { top: 0; right: 0; border-top-width: 1px; border-right-width: 1px; }
+  .ticks i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 1px; border-left-width: 1px; }
+  .ticks i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
+
+  ::selection { background: var(--ink); color: var(--paper); }
+  :focus-visible { outline: 1.5px solid var(--ink); outline-offset: 5px; }
+
+  .stage {
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    padding: 0 1.5rem 4rem;
+  }
+  .scene {
+    grid-area: 1 / 1;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center;
+    pointer-events: none;
+  }
+  .scene.on { pointer-events: auto; }
+
+  .label {
+    font-size: .74rem; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .big {
+    font-family: "Gloock", serif; font-weight: 400;
+    font-size: clamp(2.5rem, 7.4vw, 4.8rem);
+    line-height: 1.06; letter-spacing: -0.005em;
+    text-transform: uppercase;
+    margin: clamp(1.6rem, 4vh, 2.4rem) 0;
+  }
+  .big .line { display: block; }
+
+  /* every animated piece: fades through a soft blur */
+  .a {
+    opacity: 0; filter: blur(10px); transform: translateY(14px);
+    transition: opacity .9s var(--ease), filter .9s var(--ease), transform .9s var(--ease);
+    transition-delay: var(--d, 0s);
+  }
+  .on .a { opacity: 1; filter: blur(0); transform: none; }
+  .out .a { opacity: 0; filter: blur(10px); transform: translateY(-10px); transition-duration: .6s; transition-delay: calc(var(--d, 0s) * .4); }
+
+  #word { display: inline-block; transition: opacity .45s ease, filter .45s ease; }
+  #word.swap { opacity: 0; filter: blur(8px); }
+
+  /* logo */
+  .mark { width: clamp(78px, 13vw, 110px); height: auto; overflow: visible; }
+  .mark path {
+    fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: square;
+    stroke-dasharray: 1; stroke-dashoffset: 1;
+  }
+  .on .mark path { animation: draw 1.4s var(--ease) forwards; animation-delay: var(--d, 0s); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .name {
+    font-family: "Gloock", serif; font-size: clamp(2rem, 6vw, 3.3rem);
+    line-height: 1; letter-spacing: .01em; text-transform: uppercase;
+    margin: .9rem 0 .45rem;
+  }
+  .scene.dissolved .logo-wrap { visibility: hidden; }
+
+  .about {
+    max-width: 30rem; margin: clamp(1.2rem, 3vh, 1.6rem) 0 0;
+    font-size: clamp(.95rem, 1.6vw, 1.05rem); line-height: 1.75; color: var(--ink-soft);
+    text-wrap: pretty;
+  }
+  /* contact */
+  .contact { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem 1.6rem; margin-top: clamp(1.6rem, 4vh, 2.2rem); }
+  .pill {
+    display: inline-flex; align-items: center; gap: .6rem;
+    padding: .95rem 1.6rem; border: 1px solid var(--ink); border-radius: 999px; background: #fff;
+    color: var(--ink); text-decoration: none;
+    font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+    transition: background-color .3s var(--ease), color .3s var(--ease);
+  }
+  .pill svg { width: 17px; height: 17px; }
+  .pill:hover { background: var(--ink); color: var(--paper); }
+  .link {
+    color: var(--ink); text-decoration: none;
+    font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+    border-bottom: 1px solid currentColor; padding-bottom: 3px;
+  }
+  .link:hover { color: var(--ink-soft); }
+  .link .num { letter-spacing: .06em; font-weight: 400; }
+
+  /* bottom bar, always there */
+  .foot {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    padding: clamp(1.6rem, 3.4vw, 2.4rem) clamp(2rem, 5vw, 3.6rem);
+    font-size: .68rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .foot a, .foot button { text-transform: inherit; color: inherit; text-decoration: none; background: none; border: 0; font: inherit; letter-spacing: inherit; cursor: pointer; padding: .3rem 0; }
+  .foot a:hover, .foot button:hover { color: var(--ink); }
+  .foot .right { display: flex; align-items: center; gap: 1.4rem; }
+  .foot span { padding: .3rem 0; }
+  #replay, #skip { transition: opacity .5s; }
+  #replay { opacity: 0; pointer-events: none; }
+  #replay.show { opacity: 1; pointer-events: auto; }
+  #skip.gone { opacity: 0; pointer-events: none; position: absolute; }
+  #replay:not(.show) { position: absolute; }
+
+  canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  @media (max-width: 560px) {
+    .contact { flex-direction: column; gap: 1.3rem; }
+    .foot .right .hide-sm { display: none; }
+  }
+  @media (max-width: 560px) { :root { --cell: 32px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .cell { display: none; }
+    .a, #word { transition: none; filter: none; transform: none; }
+    .mark path { stroke-dashoffset: 0; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="grid" aria-hidden="true"></div>
+<div class="glow" aria-hidden="true"></div>
+<div class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<main class="stage" aria-live="polite">
+  <!-- 1 -->
+  <section class="scene" id="s1" aria-hidden="true">
+    <p class="label a" style="--d:0s">Get ready</p>
+    <h2 class="big">
+      <span class="line a" style="--d:.15s">Something</span>
+      <span class="line a" style="--d:.3s"><span id="word">Special</span></span>
+      <span class="line a" style="--d:.45s">is coming!</span>
+    </h2>
+    <p class="label a" style="--d:.6s">Stay close</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="scene" id="s2" aria-hidden="true">
+    <h2 class="big"><span class="line a" style="--d:0s">Meet the</span><span class="line a" style="--d:.15s">brand!</span></h2>
+  </section>
+
+  <!-- 3 -->
+  <section class="scene" id="s3" aria-hidden="true">
+    <div class="logo-wrap" id="logo">
+      <svg class="mark" id="markSvg" viewBox="0 0 100 100" aria-hidden="true">
+        <path pathLength="1" style="--d:0s" d="M22 90 V50 A28 28 0 0 1 78 50 V90"/>
+        <path pathLength="1" style="--d:.25s" d="M36 90 V54 A14 14 0 0 1 64 54 V90"/>
+        <path pathLength="1" style="--d:.5s" d="M10 90 H90"/>
+      </svg>
+      <div class="name a" style="--d:.7s" id="logoName">Hasan Mahdi</div>
+      <p class="label a" style="--d:.9s" id="logoSub">Digital systems · Iraq</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="scene" id="s4">
+    <p class="label a" style="--d:0s">Hasan Mahdi is</p>
+    <h1 class="big">
+      <span class="line a" style="--d:.15s">Launching</span>
+      <span class="line a" style="--d:.3s">soon!</span>
+    </h1>
+    <p class="label a" style="--d:.45s">Stay tuned</p>
+    <p class="about a" style="--d:.6s">I build digital systems for companies and organizations in Iraq. The full site is still steeping. Pull up a chair and say hi in the meantime.</p>
+    <div class="contact a" style="--d:.8s">
+      <a class="pill" id="wa" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.150l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.050.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29Z"/></svg>
+        Message on WhatsApp
+      </a>
+      <a class="link" id="call" href="#">Call <span class="num" id="num"></span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Hasan Mahdi</span>
+  <span class="right">
+    <button id="skip" type="button">Skip intro</button>
+    <button id="replay" type="button">Replay</button>
+    <a id="waFoot" href="#" target="_blank" rel="noopener" class="hide-sm">WhatsApp</a>
+    <span class="hide-sm">hasnmahdi.com</span>
+  </span>
+</footer>
+
+<canvas id="dust" aria-hidden="true"></canvas>
+
+<script>
+  /* ====== Edit your number here ====== */
+  const PHONE = "9647708036068";
+  const PHONE_DISPLAY = "+964 770 803 6068";
+  const WA_TEXT = "Hi Hasan, I saw your website and wanted to get in touch.";
+  /* =================================== */
+  const waURL = "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(WA_TEXT);
+  document.getElementById("wa").href = waURL;
+  document.getElementById("waFoot").href = waURL;
+  document.getElementById("call").href = "tel:+" + PHONE;
+  document.getElementById("num").textContent = PHONE_DISPLAY;
+
+  const $ = (id) => document.getElementById(id);
+  const scenes = { s1: $("s1"), s2: $("s2"), s3: $("s3"), s4: $("s4") };
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const wait = (ms) => new Promise(r => timers.push(setTimeout(r, ms)));
+  let timers = [], run = 0;
+
+  function show(id) { const s = scenes[id]; s.classList.remove("out", "dissolved"); s.classList.add("on"); s.removeAttribute("aria-hidden"); }
+  function hide(id) { const s = scenes[id]; s.classList.remove("on"); s.classList.add("out"); s.setAttribute("aria-hidden", "true"); }
+  function reset() {
+    timers.forEach(clearTimeout); timers = [];
+    Object.keys(scenes).forEach(id => { scenes[id].classList.remove("on", "out", "dissolved"); scenes[id].setAttribute("aria-hidden", "true"); });
+    // restart the stroke drawing
+    document.querySelectorAll(".mark path").forEach(p => { p.style.animation = "none"; void p.getBoundingClientRect(); p.style.animation = ""; });
+    $("replay").classList.remove("show");
+  }
+
+  const remember = () => { try { localStorage.setItem("hm_seen", "1"); } catch (e) {} };
+  const seenBefore = () => { try { return localStorage.getItem("hm_seen") === "1"; } catch (e) { return false; } };
+
+  function finale() {
+    run++; reset();
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    show("s4");
+    $("skip").classList.add("gone");
+    $("replay").classList.add("show");
+    remember();
+  }
+
+  async function play() {
+    const me = ++run;
+    reset();
+    $("skip").classList.remove("gone");
+    if (reduce) { finale(); return; }
+
+    await wait(200);
+    show("s1");
+    const words = ["Special", "Useful", "Clever"];
+    await wait(1000);
+    for (let i = 1; i < words.length; i++) {
+      if (me !== run) return;
+      $("word").classList.add("swap");
+      await wait(380);
+      $("word").textContent = words[i];
+      $("word").classList.remove("swap");
+      await wait(650);
+    }
+    if (me !== run) return;
+    hide("s1"); await wait(700);
+    show("s2"); await wait(1100);
+    hide("s2"); await wait(600);
+    show("s3"); await wait(1900);
+    if (me !== run) return;
+    dissolve();
+    await wait(900);
+    if (me !== run) return;
+    show("s4");
+    $("skip").classList.add("gone");
+    remember();
+    await wait(1200);
+    $("replay").classList.add("show");
+  }
+
+  /* ---------- logo turns to dust ---------- */
+  const cv = $("dust"), ctx = cv.getContext("2d");
+  function fit() { cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio; }
+  addEventListener("resize", fit); fit();
+
+  function dissolve() {
+    const me = run;
+    const d = devicePixelRatio;
+    const off = document.createElement("canvas");
+    off.width = cv.width; off.height = cv.height;
+    const o = off.getContext("2d");
+    o.fillStyle = o.strokeStyle = getComputedStyle(document.body).color;
+
+    // the mark
+    const svg = $("markSvg").getBoundingClientRect();
+    const k = svg.width / 100 * d;
+    o.save(); o.translate(svg.left * d, svg.top * d); o.scale(k, k);
+    o.lineWidth = 2.2; o.lineCap = "square";
+    document.querySelectorAll(".mark path").forEach(p => o.stroke(new Path2D(p.getAttribute("d"))));
+    o.restore();
+
+    // the words
+    [["logoName"], ["logoSub"]].forEach(([id]) => {
+      const el = $(id), r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+      o.font = `${cs.fontWeight} ${parseFloat(cs.fontSize) * d}px ${cs.fontFamily}`;
+      if ("letterSpacing" in o) o.letterSpacing = (parseFloat(cs.letterSpacing) || 0) * d + "px";
+      o.fillStyle = cs.color;
+      o.textAlign = "center"; o.textBaseline = "middle";
+      o.fillText(el.textContent.toUpperCase(), (r.left + r.width / 2) * d, (r.top + r.height / 2) * d);
+    });
+
+    const img = o.getImageData(0, 0, off.width, off.height).data;
+    const parts = [];
+    const step = Math.max(2, Math.round(1.6 * d));
+    let minX = Infinity, maxX = 0;
+    for (let y = 0; y < off.height; y += step) for (let x = 0; x < off.width; x += step) {
+      const a = img[(y * off.width + x) * 4 + 3];
+      if (a > 100) { parts.push({ x, y, c: a }); if (x < minX) minX = x; if (x > maxX) maxX = x; }
+    }
+    const span = Math.max(1, maxX - minX);
+    parts.forEach(p => {
+      p.delay = ((p.x - minX) / span) * 28 + Math.random() * 10;   // wind blows left to right
+      p.vx = (1 + Math.random() * 2.5) * d;
+      p.vy = (-.6 - Math.random() * 1.6) * d;
+      p.life = 0; p.max = 40 + Math.random() * 40;
+      p.s = (Math.random() < .25 ? 2 : 1.2) * d;
+    });
+
+    scenes.s3.classList.add("dissolved");
+    const col = getComputedStyle(document.body).color;
+    let f = 0;
+    (function tick() {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.fillStyle = col;
+      let alive = 0;
+      for (const p of parts) {
+        if (f < p.delay) { ctx.globalAlpha = 1; ctx.fillRect(p.x, p.y, step, step); alive++; continue; }
+        p.life++;
+        if (p.life > p.max) continue;
+        alive++;
+        p.vx *= 1.02; p.vy += (Math.random() - .55) * .25 * d;
+        p.x += p.vx; p.y += p.vy;
+        ctx.globalAlpha = 1 - p.life / p.max;
+        ctx.fillRect(p.x, p.y, p.s, p.s);
+      }
+      ctx.globalAlpha = 1;
+      f++;
+      if (alive && me === run) requestAnimationFrame(tick); else ctx.clearRect(0, 0, cv.width, cv.height);
+    })();
+  }
+
+  /* light up random grid cells */
+  if (!reduce) {
+    const grid = document.querySelector(".grid");
+    setInterval(() => {
+      if (document.hidden) return;
+      const size = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--cell"));
+      const cols = Math.ceil(innerWidth / size), rows = Math.ceil(innerHeight / size);
+      const c = document.createElement("i");
+      c.className = "cell" + (Math.random() < .12 ? " ink" : "");
+      c.style.left = Math.floor(Math.random() * cols) * size + "px";
+      c.style.top = Math.floor(Math.random() * rows) * size + "px";
+      grid.appendChild(c);
+      setTimeout(() => c.remove(), 3300);
+    }, 420);
+  }
+
+  $("replay").addEventListener("click", play);
+  $("skip").addEventListener("click", finale);
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => seenBefore() ? finale() : play());
+</script>
+</body>
+</html>
