@@ -163,6 +163,22 @@
   .link:hover { color: var(--ink-soft); }
   .link .num { letter-spacing: .06em; font-weight: 400; }
 
+  /* top brand, always there */
+  .top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 2;
+    display: flex; justify-content: center;
+    padding: clamp(1.4rem, 3.2vw, 2.2rem) 1rem 0;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: .7rem;
+    color: var(--ink); text-decoration: none;
+    font-size: .72rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+  }
+  .brand svg { width: 30px; height: 30px; }
+  .brand svg path { fill: none; stroke: var(--ink); stroke-width: 3.2; stroke-linejoin: miter; }
+  .mark-sm { width: 46px !important; margin-bottom: 1.1rem; }
+  .mark-sm path { stroke-width: 2.6 !important; }
+
   /* bottom bar, always there */
   .foot {
     position: fixed; left: 0; right: 0; bottom: 0;
@@ -200,6 +216,13 @@
 <div class="glow" aria-hidden="true"></div>
 <div class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
+<header class="top">
+  <a class="brand" href="/" aria-label="Hasan Mahdi, home">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M10 66 H22 V84 H10 Z"/><path d="M26 66 H74 V84 H26 Z"/><path d="M78 66 H90 V84 H78 Z"/><path d="M10 44 H48 V62 H10 Z"/><path d="M52 44 H90 V62 H52 Z"/><path d="M31 22 H69 V40 H31 Z"/></svg>
+    <span>Hasan Mahdi</span>
+  </a>
+</header>
+
 <main class="stage" aria-live="polite">
   <!-- 1 -->
   <section class="scene" id="s1" aria-hidden="true">
@@ -235,14 +258,15 @@
 
   <!-- 4 -->
   <section class="scene" id="s4">
-    <p class="label a" style="--d:0s">Hasan Mahdi is</p>
+    <svg class="mark mark-sm" viewBox="0 0 100 100" aria-hidden="true"><path pathLength="1" style="--d:0.10s" d="M10 66 H22 V84 H10 Z"/><path pathLength="1" style="--d:0.22s" d="M26 66 H74 V84 H26 Z"/><path pathLength="1" style="--d:0.34s" d="M78 66 H90 V84 H78 Z"/><path pathLength="1" style="--d:0.46s" d="M10 44 H48 V62 H10 Z"/><path pathLength="1" style="--d:0.58s" d="M52 44 H90 V62 H52 Z"/><path pathLength="1" style="--d:0.70s" d="M31 22 H69 V40 H31 Z"/></svg>
+    <p class="label a" style="--d:.5s">Hasan Mahdi is</p>
     <h1 class="big">
-      <span class="line a" style="--d:.15s">Launching</span>
-      <span class="line a" style="--d:.3s">soon!</span>
+      <span class="line a" style="--d:.65s">Launching</span>
+      <span class="line a" style="--d:.8s">soon!</span>
     </h1>
-    <p class="label a" style="--d:.45s">Stay tuned</p>
-    <p class="about a" style="--d:.6s">I build digital systems for companies and organizations in Iraq. The full site is still steeping. Pull up a chair and say hi in the meantime.</p>
-    <div class="contact a" style="--d:.8s">
+    <p class="label a" style="--d:.95s">Stay tuned</p>
+    <p class="about a" style="--d:1.1s">I build digital systems for companies and organizations in Iraq. The full site is still steeping. Pull up a chair and say hi in the meantime.</p>
+    <div class="contact a" style="--d:1.3s">
       <a class="pill" id="wa" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.150l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.050.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29Z"/></svg>
         Message on WhatsApp
@@ -253,12 +277,11 @@
 </main>
 
 <footer class="foot">
-  <span>Hasan Mahdi</span>
+  <span>hasnmahdi.com</span>
   <span class="right">
     <button id="skip" type="button">Skip intro</button>
     <button id="replay" type="button">Replay</button>
     <a id="waFoot" href="#" target="_blank" rel="noopener" class="hide-sm">WhatsApp</a>
-    <span class="hide-sm">hasnmahdi.com</span>
   </span>
 </footer>
 
@@ -356,7 +379,7 @@
     const k = svg.width / 100 * d;
     o.save(); o.translate(svg.left * d, svg.top * d); o.scale(k, k);
     o.lineWidth = 1.5; o.lineCap = "square"; o.lineJoin = "miter";
-    document.querySelectorAll(".mark path").forEach(p => o.stroke(new Path2D(p.getAttribute("d"))));
+    document.querySelectorAll("#markSvg path").forEach(p => o.stroke(new Path2D(p.getAttribute("d"))));
     o.restore();
 
     // the words
