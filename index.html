@@ -168,7 +168,10 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 2;
     display: flex; justify-content: center;
     padding: clamp(1.4rem, 3.2vw, 2.2rem) 1rem 0;
+    transition: opacity .6s var(--ease), transform .6s var(--ease);
   }
+  /* the big logo takes over on the logo scene and the final screen */
+  body[data-scene="s3"] .top, body[data-scene="s4"] .top { opacity: 0; transform: translateY(-8px); pointer-events: none; }
   .brand {
     display: inline-flex; align-items: center; gap: .7rem;
     color: var(--ink); text-decoration: none;
@@ -305,9 +308,10 @@
   const wait = (ms) => new Promise(r => timers.push(setTimeout(r, ms)));
   let timers = [], run = 0;
 
-  function show(id) { const s = scenes[id]; s.classList.remove("out", "dissolved"); s.classList.add("on"); s.removeAttribute("aria-hidden"); }
+  function show(id) { document.body.dataset.scene = id; const s = scenes[id]; s.classList.remove("out", "dissolved"); s.classList.add("on"); s.removeAttribute("aria-hidden"); }
   function hide(id) { const s = scenes[id]; s.classList.remove("on"); s.classList.add("out"); s.setAttribute("aria-hidden", "true"); }
   function reset() {
+    delete document.body.dataset.scene;
     timers.forEach(clearTimeout); timers = [];
     Object.keys(scenes).forEach(id => { scenes[id].classList.remove("on", "out", "dissolved"); scenes[id].setAttribute("aria-hidden", "true"); });
     // restart the stroke drawing
