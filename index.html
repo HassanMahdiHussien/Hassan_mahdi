@@ -163,22 +163,6 @@
   .link:hover { color: var(--ink-soft); }
   .link .num { letter-spacing: .06em; font-weight: 400; }
 
-  /* top brand, always there */
-  .top {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 2;
-    display: flex; justify-content: center;
-    padding: clamp(1.4rem, 3.2vw, 2.2rem) 1rem 0;
-    transition: opacity .6s var(--ease), transform .6s var(--ease);
-  }
-  /* the big logo takes over on the logo scene and the final screen */
-  body[data-scene="s3"] .top, body[data-scene="s4"] .top { opacity: 0; transform: translateY(-8px); pointer-events: none; }
-  .brand {
-    display: inline-flex; align-items: center; gap: .7rem;
-    color: var(--ink); text-decoration: none;
-    font-size: .72rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
-  }
-  .brand svg { width: 30px; height: 30px; }
-  .brand svg path { fill: none; stroke: var(--ink); stroke-width: 3.2; stroke-linejoin: miter; }
   .mark-sm { width: 46px !important; margin-bottom: 1.1rem; }
   .mark-sm path { stroke-width: 2.6 !important; }
 
@@ -218,13 +202,6 @@
 <div class="grid" aria-hidden="true"></div>
 <div class="glow" aria-hidden="true"></div>
 <div class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-
-<header class="top">
-  <a class="brand" href="/" aria-label="Hasan Mahdi, home">
-    <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M10 66 H22 V84 H10 Z"/><path d="M26 66 H74 V84 H26 Z"/><path d="M78 66 H90 V84 H78 Z"/><path d="M10 44 H48 V62 H10 Z"/><path d="M52 44 H90 V62 H52 Z"/><path d="M31 22 H69 V40 H31 Z"/></svg>
-    <span>Hasan Mahdi</span>
-  </a>
-</header>
 
 <main class="stage" aria-live="polite">
   <!-- 1 -->
