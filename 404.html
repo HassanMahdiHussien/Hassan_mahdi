@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <title>Page not found · Hasan Mahdi</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body>
+<noscript><a href="/">English home</a></noscript>
+<script>
+function targetFor(pathname) {
+  const path = pathname.split(/[?#]/, 1)[0].replace(/\/+$/, '') || '/';
+  const routes = {
+    '/en': '/#/',
+    '/en/tools': '/#/tools',
+    '/en/tools/social-security-calculator': '/#/tools',
+    '/en/tools/employee-file-check': '/#/tools/employee-file-check',
+    '/en/privacy': '/#/privacy',
+    '/ar': '/#/ar/',
+    '/ar/tools': '/#/ar/tools',
+    '/ar/tools/social-security-calculator': '/#/ar/tools',
+    '/ar/tools/employee-file-check': '/#/ar/tools/employee-file-check',
+    '/ar/privacy': '/#/ar/privacy',
+    '/tools': '/#/tools',
+    '/tools/social-security-calculator': '/#/tools',
+    '/tools/employee-file-check': '/#/tools/employee-file-check',
+    '/privacy': '/#/privacy',
+  };
+  return routes[path] || (path.startsWith('/ar/') ? '/#/ar/not-found' : '/#/not-found');
+}
+location.replace(targetFor(location.pathname));
+</script>
+</body>
+</html>
