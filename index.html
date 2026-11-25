@@ -230,6 +230,8 @@ html:not(.js) [data-view="check"] { display: none; }
 .check-choices, .check-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .check-choice { min-block-size: var(--touch); padding-block: 8px; padding-inline: 14px; border: 1px solid var(--green); border-radius: var(--radius-sm); background: var(--white); color: var(--green); }
 .check-choice[aria-pressed="true"] { background: var(--green); color: var(--on-green); }
+.check-keep .check-list { margin-block-end: 0; }
+.check-keep + .check-list { margin-block-start: 0; }
 .check-question, .check-gap, .check-section-row { min-inline-size: 0; padding-block: 16px; border-block-end: 1px solid var(--line); }
 .check-question legend { font-weight: 600; }
 .check-question fieldset { min-inline-size: 0; margin: 0; padding: 0; border: 0; }
@@ -252,7 +254,8 @@ html:not(.js) [data-view="check"] { display: none; }
   body:has(.check-report) [data-view]:not(:has(.check-report)) { display: none !important; }
   body:has(.check-report) [data-view="check"] > h1 { display: none !important; }
   .check-report { max-inline-size: none; padding-block: 0; }
-  .check-report .check-gap, .check-report .check-section-row { break-inside: avoid; }
+  .check-report .check-gap, .check-report .check-section-row, .check-report .check-keep { break-inside: avoid; }
+  .check-report h2 { break-after: avoid; }
 }
 @media print { .js [data-view]:not(.active) { display: none !important; } }
   </style>
@@ -314,7 +317,7 @@ html:not(.js) [data-view="check"] { display: none; }
         <div class="spec-card-header"><span>Try it now</span><span class="spec-card-code" lang="en" dir="ltr">TOOL · 01</span></div>
         <div class="spec-card-body">
           <h2>Employee file readiness check</h2>
-          <p>Answer 21 questions across 7 areas in about 10 minutes.</p>
+          <p>Answer 21 questions across 7 areas in about 5 minutes.</p>
           <p>See your score for each area and the top gaps, then print or save your report.</p>
           <p>Your answers are not saved and never leave your browser.</p>
           <a class="button button-primary" href="#/tools/employee-file-check">Start the check →</a>
@@ -391,7 +394,7 @@ html:not(.js) [data-view="check"] { display: none; }
         <div class="spec-card-header"><span>جرّب الآن</span><span class="spec-card-code" lang="en" dir="ltr">TOOL · 01</span></div>
         <div class="spec-card-body">
           <h2>تحقق جاهزية ملفات الموظفين</h2>
-          <p>أجب عن 21 سؤالاً في 7 مجالات خلال نحو 10 دقائق.</p>
+          <p>أجب عن 21 سؤالاً في 7 مجالات خلال نحو 5 دقائق.</p>
           <p>اطّلع على نتيجتك في كل مجال وأهم الثغرات، ثم اطبع تقريرك أو احفظه.</p>
           <p>إجاباتك لا تُحفظ ولا تغادر متصفحك.</p>
           <a class="button button-primary" href="#/ar/tools/employee-file-check">ابدأ التحقق ←</a>
@@ -508,10 +511,13 @@ export function legalBasis(question, rulesDoc) {
     ? { law: rule.law, article: rule.article, sourceUrl: rule.sourceUrl } : null;
 }
 
-export function formatArticle(article, format, parts) {
-  const [main, part] = String(article).split('/');
+export function formatArticle(article, format, parts, letters = []) {
+  const [main, part, letter] = String(article).split('/');
   const label = format.replace('{n}', main);
-  return part ? `${label} (${parts[Number(part) - 1]})` : label;
+  if (!part) return label;
+  const detail = [parts[Number(part) - 1]];
+  if (letter) detail.push(letters[letter.charCodeAt(0) - 97]);
+  return `${label} (${detail.join(format.startsWith('Article') ? ', ' : '، ')})`;
 }
 
 export const NEXT_ACTIONS = 5;
@@ -538,19 +544,21 @@ export function isEmailShape(text) {
 <script type="application/json" id="rules-data">
 {
   "checkRules": [
-    { "id": "check.q01", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
-    { "id": "check.q02", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
+    { "id": "check.q02", "law": "Labor Law 37/2015", "article": "37/1", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
+    { "id": "check.q03", "law": "Labor Law 37/2015", "article": "37/1", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
     { "id": "check.q05", "law": "Labor Law 37/2015", "article": "37/2", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
+    { "id": "check.q06", "law": "Labor Law 37/2015", "article": "41/2/k", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
     { "id": "check.q07", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
     { "id": "check.q08", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
     { "id": "check.q09", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
+    { "id": "check.q10", "law": "Labor Law 37/2015", "article": "59/2", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
     { "id": "check.q11", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
     { "id": "check.q12", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
-    { "id": "check.q14", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
+    { "id": "check.q14", "law": "Labor Law 37/2015", "article": "82/1", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
     { "id": "check.q16", "law": "Labor Law 37/2015", "article": "138", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
     { "id": "check.q17", "law": "Labor Law 37/2015", "article": "140", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
-    { "id": "check.q19", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
-    { "id": "check.q20", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null }
+    { "id": "check.q19", "law": "Labor Law 37/2015", "article": "60", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
+    { "id": "check.q20", "law": "Labor Law 37/2015", "article": "41/2/g", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" }
   ]
 }
 </script>
@@ -558,23 +566,23 @@ export function isEmailShape(text) {
 {
   "sections": ["contracts", "hiring", "socialSecurity", "payrollTax", "leaveAttendance", "discipline", "endOfService"],
   "questions": [
-    { "id": "q01", "section": "contracts", "risk": "high", "rule": "check.q01" },
+    { "id": "q01", "section": "contracts", "risk": "high", "rule": null },
     { "id": "q02", "section": "contracts", "risk": "medium", "rule": "check.q02" },
-    { "id": "q03", "section": "contracts", "risk": "medium", "rule": null },
+    { "id": "q03", "section": "contracts", "risk": "medium", "rule": "check.q03" },
     { "id": "q04", "section": "hiring", "risk": "high", "rule": null },
     { "id": "q05", "section": "hiring", "risk": "medium", "rule": "check.q05" },
-    { "id": "q06", "section": "hiring", "risk": "medium", "rule": null },
+    { "id": "q06", "section": "hiring", "risk": "medium", "rule": "check.q06" },
     { "id": "q07", "section": "socialSecurity", "risk": "high", "rule": "check.q07" },
     { "id": "q08", "section": "socialSecurity", "risk": "high", "rule": "check.q08", "answers": "monthly" },
     { "id": "q09", "section": "socialSecurity", "risk": "high", "rule": "check.q09" },
-    { "id": "q10", "section": "payrollTax", "risk": "medium", "rule": null },
+    { "id": "q10", "section": "payrollTax", "risk": "medium", "rule": "check.q10" },
     { "id": "q11", "section": "payrollTax", "risk": "high", "rule": "check.q11", "answers": "partly" },
     { "id": "q12", "section": "payrollTax", "risk": "high", "rule": "check.q12", "answers": "monthly" },
     { "id": "q13", "section": "leaveAttendance", "risk": "medium", "rule": null },
     { "id": "q14", "section": "leaveAttendance", "risk": "medium", "rule": "check.q14" },
     { "id": "q15", "section": "leaveAttendance", "risk": "medium", "rule": null },
-    { "id": "q16", "section": "discipline", "risk": "high", "rule": "check.q16" },
-    { "id": "q17", "section": "discipline", "risk": "high", "rule": "check.q17" },
+    { "id": "q16", "section": "discipline", "risk": "high", "rule": "check.q16", "answers": "frequency" },
+    { "id": "q17", "section": "discipline", "risk": "high", "rule": "check.q17", "answers": "frequency" },
     { "id": "q18", "section": "discipline", "risk": "medium", "rule": null },
     { "id": "q19", "section": "endOfService", "risk": "high", "rule": "check.q19", "answers": "leavers" },
     { "id": "q20", "section": "endOfService", "risk": "medium", "rule": "check.q20", "answers": "leavers" },
@@ -592,16 +600,16 @@ export function isEmailShape(text) {
         "sizeLabel": "حجم الشركة", "sizeRequired": "يرجى اختيار حجم الشركة أولاً.", "sizes": { "small": "أقل من 50 موظفاً", "medium": "من 50 إلى 200 موظف", "large": "أكثر من 200 موظف" },
         "kurdistanNote": "هذه النسخة تخص العراق الاتحادي فقط. نخطط لنسخة منفصلة لإقليم كردستان.",
         "notSaved": "لا نحفظ إجاباتك.", "start": "ابدأ التحقق", "next": "التالي", "back": "السابق", "seeResult": "اعرض النتيجة",
-        "progress": "القسم {n} من {total}", "answers": { "yes": "نعم، لجميع الموظفين", "some": "لبعضهم", "no": "لا" }, "answerSets": { "monthly": { "yes": "نعم، كل شهر", "some": "في بعض الأشهر", "no": "لا" }, "partly": { "yes": "نعم", "some": "جزئياً", "no": "لا" }, "leavers": { "yes": "نعم، لكل من يترك العمل", "some": "لبعضهم", "no": "لا" } },
+        "progress": "القسم {n} من {total}", "answers": { "yes": "نعم، لجميع الموظفين", "some": "لبعضهم", "no": "لا" }, "answerSets": { "monthly": { "yes": "نعم، كل شهر", "some": "في بعض الأشهر", "no": "لا" }, "partly": { "yes": "نعم", "some": "جزئياً", "no": "لا" }, "leavers": { "yes": "نعم، لكل من يترك العمل", "some": "لبعضهم", "no": "لا" }, "frequency": { "yes": "نعم، دائماً", "some": "أحياناً", "no": "لا" } },
         "whyLabel": "لماذا يهم هذا؟", "required": "يرجى الإجابة عن: {question}", "langNote": "تغيير اللغة يبدأ التحقق من جديد.",
         "resultTitle": "نتيجة جاهزية الملفات", "overall": "الجاهزية العامة", "bands": {
           "green": { "name": "جاهز", "message": "جاهز: واصل العمل وراجع الملفات كل ربع سنة." },
           "yellow": { "name": "جاهز جزئياً", "message": "جاهز جزئياً: بعض الثغرات قد تسبب مشكلات مع الموظفين أو الجهات المعنية لاحقاً." },
-          "red": { "name": "يحتاج إلى اهتمام", "message": "يحتاج إلى اهتمام: ابدأ بأهم 3 ثغرات هذا الشهر." }
+          "red": { "name": "يحتاج إلى اهتمام", "message": "يحتاج إلى اهتمام: ابدأ بالثغرات في قائمة الثلاثين يوماً أدناه." }
         },
         "topGaps": "أهم الثغرات", "noGaps": "لم نجد ثغرات في إجاباتك.", "commonGap": "يمكن معالجة هذه الثغرات خطوة بخطوة.",
         "openReport": "افتح التقرير الكامل", "reportTitle": "تقرير جاهزية ملفات الموظفين", "reportDate": "تاريخ التحقق", "reportSize": "حجم الشركة",
-        "fixLabel": "خطوة عملية", "basisLabel": "الأساس القانوني", "goodPractice": "ممارسة جيدة", "articleFormat": "المادة {n}", "articleParts": ["أولاً", "ثانياً", "ثالثاً", "رابعاً", "خامساً"], "sourceLabel": "المصدر", "actionList": "خلال الثلاثين يوماً القادمة", "actionLater": "لاحقاً", "print": "اطبع أو احفظ PDF",
+        "fixLabel": "خطوة عملية", "basisLabel": "الأساس القانوني", "goodPractice": "ممارسة جيدة", "articleFormat": "المادة {n}", "articleParts": ["أولاً", "ثانياً", "ثالثاً", "رابعاً", "خامساً"], "articleLetters": ["أ", "ب", "ج", "د", "هـ", "و", "ز", "ح", "ط", "ي", "ك"], "sourceLabel": "المصدر", "actionList": "خلال الثلاثين يوماً القادمة", "actionLater": "لاحقاً", "print": "اطبع أو احفظ PDF",
         "disclaimer": "هذا تحقق إرشادي، وليس استشارة قانونية.", "closing": "إذا رغبت في مناقشة النتيجة، راسلني عبر LinkedIn."
       },
       "sections": { "contracts": "العقود", "hiring": "التعيين", "socialSecurity": "الضمان الاجتماعي", "payrollTax": "الرواتب والضريبة", "leaveAttendance": "الإجازات والحضور", "discipline": "الإجراءات الانضباطية", "endOfService": "نهاية الخدمة" },
@@ -622,7 +630,7 @@ export function isEmailShape(text) {
         "q14": { "text": "هل تتبع الإجازات الخاصة، مثل الزواج والوفاة والأمومة، بصورة منفصلة عن الإجازة السنوية؟", "why": "احتساب الإجازة الخاصة من السنوية ينقص رصيد الموظف السنوي خطأً.", "gapSome": "بعض الإجازات الخاصة مسجلة ضمن الإجازة السنوية.", "gapNo": "الإجازات الخاصة تُسجَّل ضمن الإجازة السنوية.", "fix": "خصص نوعاً مستقلاً لكل إجازة في السجل." },
         "q15": { "text": "هل تحتفظ بسجلات الحضور وتطابقها مع الرواتب كل شهر؟", "why": "عدم المطابقة يعني أن الأجر قد يُقتطع أو يُدفع عن أيام لا تطابق الحضور الفعلي.", "gapSome": "سجلات الحضور لا تطابق الرواتب بانتظام.", "gapNo": "سجلات الحضور لا تُحفظ أو لا تُطابق مع الرواتب.", "fix": "راجع سجل الحضور مقابل كشف الرواتب قبل اعتماده." },
         "q16": { "text": "هل تصدر الجزاءات خلال المهلة القانونية من تاريخ العلم بالمخالفة؟", "why": "العقوبة التي تصدر متأخرة قد يُطعن فيها وتُلغى، حتى لو كانت المخالفة ثابتة.", "gapSome": "توقيت بعض الجزاءات غير موثق أو يحتاج إلى مراجعة.", "gapNo": "توقيت العقوبات لا يُتابَع من تاريخ العلم بالمخالفة.", "fix": "سجل تاريخ العلم بالمخالفة وراجع المهلة المطلوبة قبل الإجراء." },
-        "q17": { "text": "هل يُمنح الموظف فرصة للدفاع عن نفسه قبل فرض أي عقوبة؟", "why": "العقوبة التي تصدر دون رد مكتوب من الموظف يصعب الدفاع عنها إذا اعتُرض عليها.", "gapSome": "رد الموظف المكتوب غير موجود في بعض الملفات.", "gapNo": "لا يُمنح الموظف فرصة مكتوبة للرد قبل العقوبة.", "fix": "اطلب رد الموظف كتابة قبل اتخاذ القرار واحفظه في الملف." },
+        "q17": { "text": "هل يُمنح الموظف فرصة للدفاع عن نفسه قبل فرض أي عقوبة؟", "why": "العقوبة التي تصدر دون سماع دفاع الموظف أولاً يمكن الاعتراض عليها، ويصعب تثبيتها.", "gapSome": "لا يُمنح بعض الموظفين فرصة للدفاع عن أنفسهم قبل العقوبة.", "gapNo": "لا يُمنح الموظف فرصة للدفاع عن نفسه قبل العقوبة.", "fix": "اطلب رد الموظف كتابة قبل اتخاذ القرار واحفظه في الملف." },
         "q18": { "text": "هل يوثق كل جزاء في الملف الشخصي للموظف؟", "why": "العقوبة غير الموثقة لا يمكن الاستناد إليها لاحقاً، مثلاً عندما تتكرر المخالفة.", "gapSome": "بعض الجزاءات غير موثقة في ملفات الموظفين.", "gapNo": "العقوبات لا تُوثَّق في ملفات الموظفين.", "fix": "أضف نسخة من كل قرار إلى ملف الموظف المعني." },
         "q19": { "text": "هل تسوى المستحقات النهائية في موعدها؟", "why": "تأخر المستحقات النهائية يترك الموظف السابق بانتظار حقه، وغالباً ما ينتهي بشكوى.", "gapSome": "بعض التسويات النهائية لم تكتمل في موعدها.", "gapNo": "المستحقات النهائية لا تُسوّى في وقتها.", "fix": "جهز قائمة بالمستحقات وراجع إتمام التسوية عند المغادرة." },
         "q20": { "text": "هل تعطى شهادة خدمة عند مغادرة الموظف؟", "why": "من دون شهادة خدمة يصعب على الموظف السابق إثبات خبرته لدى جهة عمل جديدة.", "gapSome": "لم يحصل بعض المغادرين على شهادة خدمة.", "gapNo": "المغادرون لا يستلمون شهادة خدمة.", "fix": "أضف إصدار شهادة الخدمة إلى قائمة إجراءات المغادرة." },
@@ -643,16 +651,16 @@ export function isEmailShape(text) {
         "sizeLabel": "Company size", "sizeRequired": "Please choose your company size first.", "sizes": { "small": "Under 50", "medium": "50 to 200", "large": "Over 200" },
         "kurdistanNote": "This version covers federal Iraq only. A separate Kurdistan Region version is planned.",
         "notSaved": "Your answers are not saved.", "start": "Start check", "next": "Next", "back": "Back", "seeResult": "See result",
-        "progress": "Section {n} of {total}", "answers": { "yes": "Yes, for all employees", "some": "For some", "no": "No" }, "answerSets": { "monthly": { "yes": "Yes, every month", "some": "Some months", "no": "No" }, "partly": { "yes": "Yes", "some": "Partly", "no": "No" }, "leavers": { "yes": "Yes, for all leavers", "some": "For some", "no": "No" } },
+        "progress": "Section {n} of {total}", "answers": { "yes": "Yes, for all employees", "some": "For some", "no": "No" }, "answerSets": { "monthly": { "yes": "Yes, every month", "some": "Some months", "no": "No" }, "partly": { "yes": "Yes", "some": "Partly", "no": "No" }, "leavers": { "yes": "Yes, for all leavers", "some": "For some", "no": "No" }, "frequency": { "yes": "Yes, always", "some": "Sometimes", "no": "No" } },
         "whyLabel": "Why this matters:", "required": "Please answer: {question}", "langNote": "Changing language starts the check again.",
         "resultTitle": "Your file readiness result", "overall": "Overall readiness", "bands": {
           "green": { "name": "Ready", "message": "Ready: keep it up and review every quarter." },
           "yellow": { "name": "Partly ready", "message": "Partly ready: some gaps can cause problems with employees or the authorities later." },
-          "red": { "name": "At risk", "message": "At risk: start with the top 3 gaps this month." }
+          "red": { "name": "At risk", "message": "At risk: start with the gaps in the 30-day list below." }
         },
         "topGaps": "Top gaps", "noGaps": "No gaps found in your answers.", "commonGap": "These gaps can be fixed step by step.",
         "openReport": "Open full report", "reportTitle": "Employee file readiness report", "reportDate": "Check date", "reportSize": "Company size",
-        "fixLabel": "Practical step", "basisLabel": "Legal basis", "goodPractice": "Good practice", "articleFormat": "Article {n}", "articleParts": ["first", "second", "third", "fourth", "fifth"], "sourceLabel": "Source", "actionList": "Next 30 days", "actionLater": "Later", "print": "Print / Save PDF",
+        "fixLabel": "Practical step", "basisLabel": "Legal basis", "goodPractice": "Good practice", "articleFormat": "Article {n}", "articleParts": ["first", "second", "third", "fourth", "fifth"], "articleLetters": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"], "sourceLabel": "Source", "actionList": "Next 30 days", "actionLater": "Later", "print": "Print / Save PDF",
         "disclaimer": "This is a guidance check, not legal advice.", "closing": "If you would like to discuss your result, message me on LinkedIn."
       },
       "sections": { "contracts": "Contracts", "hiring": "Hiring", "socialSecurity": "Social security", "payrollTax": "Payroll and tax", "leaveAttendance": "Leave and attendance", "discipline": "Discipline", "endOfService": "End of service" },
@@ -673,7 +681,7 @@ export function isEmailShape(text) {
         "q14": { "text": "Are special leaves (marriage, bereavement, maternity) tracked separately from annual leave?", "why": "Counting special leave as annual leave reduces the employee's annual balance by mistake.", "gapSome": "Some special leave is included in annual leave records.", "gapNo": "Special leave is recorded as annual leave.", "fix": "Give each leave type its own category in the record." },
         "q15": { "text": "Are attendance records kept and matched with payroll each month?", "why": "Unmatched records mean pay can be cut or paid for days that do not match actual attendance.", "gapSome": "Attendance and payroll are not matched regularly.", "gapNo": "Attendance records are not kept or not matched with payroll.", "fix": "Compare attendance records with payroll before approval." },
         "q16": { "text": "Are penalties issued within the legal deadline from when the violation became known?", "why": "A penalty issued too late can be challenged and cancelled, even if the violation was real.", "gapSome": "Some penalty dates are unrecorded or need review.", "gapNo": "Penalty timing is not tracked from when the violation became known.", "fix": "Record when the violation became known and check the required period before acting." },
-        "q17": { "text": "Does the employee get a chance to defend themselves before any penalty?", "why": "A penalty issued without the employee's written response is hard to defend if it is challenged.", "gapSome": "Some files lack the employee's written response.", "gapNo": "Employees are not given a written chance to respond before a penalty.", "fix": "Invite a written response before deciding and keep it in the file." },
+        "q17": { "text": "Does the employee get a chance to defend themselves before any penalty?", "why": "A penalty issued without first hearing the employee's defence can be challenged and is hard to uphold.", "gapSome": "Some employees are not given a chance to defend themselves before a penalty.", "gapNo": "Employees are not given a chance to defend themselves before a penalty.", "fix": "Invite a written response before deciding and keep it in the file." },
         "q18": { "text": "Is every penalty documented in the personnel file?", "why": "An undocumented penalty cannot be relied on later, for example when the same violation happens again.", "gapSome": "Some penalties are missing from employee files.", "gapNo": "Penalties are not documented in personnel files.", "fix": "Add each decision to the relevant employee file." },
         "q19": { "text": "Are final dues settled on time?", "why": "Late final dues leave the former employee waiting for money they are owed, which often leads to complaints.", "gapSome": "Some final settlements were not completed on time.", "gapNo": "Final dues are not settled on time.", "fix": "Prepare a dues checklist and confirm settlement on departure." },
         "q20": { "text": "Is a service certificate given on leaving?", "why": "Without a service certificate, the former employee cannot easily prove their experience to a new employer.", "gapSome": "Some leavers did not receive a service certificate.", "gapNo": "Leavers do not receive a service certificate.", "fix": "Add certificate issue to the departure checklist." },
@@ -790,7 +798,7 @@ function initCheck(prefix, s, checkData, rulesDoc) {
       const status = basisStatus(question, rulesDoc);
       if (status === 'none') add(item, 'p', `${ui.basisLabel}: ${ui.goodPractice}`);
       else if (status === 'verified') {
-        const line = add(item, 'p', `${ui.basisLabel}: ${s.laws[basis.law]} · ${formatArticle(basis.article, ui.articleFormat, ui.articleParts)} · `);
+        const line = add(item, 'p', `${ui.basisLabel}: ${s.laws[basis.law]} · ${formatArticle(basis.article, ui.articleFormat, ui.articleParts, ui.articleLetters)} · `);
         const source = add(line, 'a', ui.sourceLabel);
         source.href = basis.sourceUrl; source.target = '_blank'; source.rel = 'noopener';
       }
@@ -925,10 +933,18 @@ function initCheck(prefix, s, checkData, rulesDoc) {
         const actions = splitActions(ordered);
         for (const [title, group] of [[ui.actionList, actions.next], [ui.actionLater, actions.later]]) {
           if (!group.length) continue;
-          add(root, 'h2', title);
-          const list = add(root, 'ol');
-          if (group === actions.later) list.start = actions.next.length + 1;
-          for (const gap of group) add(list, 'li', `${s.check.questions[gap.id][gapKey(gap.answer)]} — ${s.check.questions[gap.id].fix}`, 'check-gap');
+          const first = group === actions.later ? actions.next.length + 1 : 1;
+          const keep = add(root, 'div', null, 'check-keep');
+          add(keep, 'h2', title);
+          const item = gap => `${s.check.questions[gap.id][gapKey(gap.answer)]} — ${s.check.questions[gap.id].fix}`;
+          const head = add(keep, 'ol', null, 'check-list');
+          head.start = first;
+          add(head, 'li', item(group[0]), 'check-gap');
+          if (group.length > 1) {
+            const rest = add(root, 'ol', null, 'check-list');
+            rest.start = first + 1;
+            for (const gap of group.slice(1)) add(rest, 'li', item(gap), 'check-gap');
+          }
         }
       }
       const controls = add(root, 'div', null, 'check-actions');
@@ -939,7 +955,11 @@ function initCheck(prefix, s, checkData, rulesDoc) {
       }
       followUp(root, score);
       add(root, 'p', ui.disclaimer, 'disclaimer');
-      if (screen === 'report') add(root, 'p', lang === 'ar' ? 'حسن مهدي' : 'Hasan Mahdi');
+      if (screen === 'report') {
+        add(root, 'p', lang === 'ar' ? 'حسن مهدي' : 'Hasan Mahdi');
+        const contact = add(root, 'p', 'hasnmahdi.com · linkedin.com/in/hassan-mahdi', 'check-contact');
+        contact.dir = 'ltr'; contact.lang = 'en';
+      }
       const closing = add(root, 'p');
       const [before, after = ''] = ui.closing.split('LinkedIn');
       const profile = make('a', 'LinkedIn');
