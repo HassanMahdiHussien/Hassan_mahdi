@@ -256,6 +256,9 @@ html:not(.js) [data-view="check"] { display: none; }
   .check-report { max-inline-size: none; padding-block: 0; }
   .check-report .check-gap, .check-report .check-section-row, .check-report .check-keep { break-inside: avoid; }
   .check-report h2 { break-after: avoid; }
+  body:has(.check-report) [data-view="check"] { padding-block: 0 !important; }
+  .check-report > :last-child { margin-block-end: 0; }
+  body:has(.check-report) #view-announcement { display: none !important; }
 }
 @media print { .js [data-view]:not(.active) { display: none !important; } }
   </style>
