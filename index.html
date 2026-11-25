@@ -444,7 +444,7 @@ html:not(.js) [data-view="check"] { display: none; }
   <h1 tabindex="-1">الخصوصية</h1>
   <section><h2>الأدوات</h2><p>أداة تحقق جاهزية ملفات الموظفين تعمل داخل متصفحك. لا تُرسل إجاباتك الفردية إلى خادم ولا تُحفظ في ملفات تعريف الارتباط أو مساحة التخزين. عند إعادة تحميل الصفحة تُمحى إجاباتك.</p></section>
   <section><h2>الاشتراك في التحديثات</h2><p>يرسل نموذج الاشتراك اسمك والبريد الإلكتروني والموافقة واسم النموذج فقط إلى Formspree، حصراً لإبلاغك بالأدوات الجديدة. وكأي موقع، تستلم Formspree عنوان IP الخاص بك عند إرسال النموذج. يمكنك إلغاء الاشتراك في أي وقت وطلب حذف بياناتك بمراسلتي.</p></section>
-  <section><h2>نموذج المتابعة بعد التحقق</h2><p>بموافقتك يرسل نموذج المتابعة بريدك الإلكتروني وموافقتك والنتيجة العامة وحجم الشركة والإجابة الاختيارية، إن وجدت، واسم النموذج إلى Formspree. لا تُرسل الإجابات الفردية أبدا. وكأي موقع، تستلم Formspree عنوان IP الخاص بك عند إرسال النموذج.</p></section>
+  <section><h2>نموذج المتابعة بعد التحقق</h2><p>بموافقتك يرسل نموذج المتابعة بريدك الإلكتروني وموافقتك والنتيجة العامة وحجم الشركة والإجابة الاختيارية، إن وجدت، واسم النموذج إلى Formspree. لا تُرسل الإجابات الفردية أبداً. وكأي موقع، تستلم Formspree عنوان IP الخاص بك عند إرسال النموذج.</p></section>
   <section><h2>الإحصاءات</h2><p>فعّلت Cloudflare خدمة Cloudflare Web Analytics على هذا النطاق. تحصي الزيارات والصفحات والبلد والمتصفح ونوع الجهاز. لا تستخدم ملفات تعريف الارتباط، ولا تتعقبك بين المواقع، ولا تجمع الأسماء.</p></section>
   <section><h2>الخطوط والملفات</h2><p>الخطوط وملفات الموقع تُقدَّم من الموقع نفسه؛ لا أحمّلها من خدمات خارجية.</p></section>
   <section><h2>التواصل</h2><p>للسؤال عن الخصوصية أو طلب حذف بيانات الاشتراك، راسلني على <a href="mailto:hasan@hasnmahdi.com" dir="ltr">hasan@hasnmahdi.com</a>.</p></section>
@@ -457,8 +457,8 @@ html:not(.js) [data-view="check"] { display: none; }
   <p><a href="#/" lang="en" hreflang="en">English home</a></p>
 </section>
 </main>
-  <footer class="site-footer" data-lang="en" lang="en" dir="ltr"><div class="container footer-inner"><span>© 2026 Hasan Mahdi</span><div class="footer-links"><a href="#/privacy">Privacy</a></div></div></footer>
-  <footer class="site-footer" data-lang="ar" lang="ar"><div class="container footer-inner"><span>© 2026 حسن مهدي</span><div class="footer-links"><!-- TODO: add <a href="LINKEDIN_URL" lang="en">LinkedIn</a> once the profile URL is decided --><a href="#/ar/privacy">الخصوصية</a></div></div></footer>
+  <footer class="site-footer" data-lang="en" lang="en" dir="ltr"><div class="container footer-inner"><span>© 2026 Hasan Mahdi</span><div class="footer-links"><a href="https://www.linkedin.com/in/hassan-mahdi/" target="_blank" rel="noopener">LinkedIn</a><a href="#/privacy">Privacy</a></div></div></footer>
+  <footer class="site-footer" data-lang="ar" lang="ar"><div class="container footer-inner"><span>© 2026 حسن مهدي</span><div class="footer-links"><a lang="en" href="https://www.linkedin.com/in/hassan-mahdi/" target="_blank" rel="noopener">LinkedIn</a><a href="#/ar/privacy">الخصوصية</a></div></div></footer>
 <p id="view-announcement" class="visually-hidden" aria-live="polite"></p>
 <script type="text/x-module" id="pure-module">
 export const ANSWER_POINTS = Object.freeze({ yes: 2, some: 1, no: 0 });
@@ -508,6 +508,12 @@ export function legalBasis(question, rulesDoc) {
     ? { law: rule.law, article: rule.article, sourceUrl: rule.sourceUrl } : null;
 }
 
+export function formatArticle(article, format, parts) {
+  const [main, part] = String(article).split('/');
+  const label = format.replace('{n}', main);
+  return part ? `${label} (${parts[Number(part) - 1]})` : label;
+}
+
 export const NEXT_ACTIONS = 5;
 
 export function splitActions(gaps, limit = NEXT_ACTIONS) {
@@ -534,15 +540,15 @@ export function isEmailShape(text) {
   "checkRules": [
     { "id": "check.q01", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
     { "id": "check.q02", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
-    { "id": "check.q05", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
+    { "id": "check.q05", "law": "Labor Law 37/2015", "article": "37/2", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
     { "id": "check.q07", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
     { "id": "check.q08", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
     { "id": "check.q09", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
     { "id": "check.q11", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
     { "id": "check.q12", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
     { "id": "check.q14", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
-    { "id": "check.q16", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
-    { "id": "check.q17", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
+    { "id": "check.q16", "law": "Labor Law 37/2015", "article": "138", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
+    { "id": "check.q17", "law": "Labor Law 37/2015", "article": "140", "sourceUrl": "https://lvtd.gov.iq/mihan/Website/LaborLawExplained", "verifiedAt": "2026-11-25" },
     { "id": "check.q19", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null },
     { "id": "check.q20", "law": null, "article": null, "sourceUrl": null, "verifiedAt": null }
   ]
@@ -559,20 +565,20 @@ export function isEmailShape(text) {
     { "id": "q05", "section": "hiring", "risk": "medium", "rule": "check.q05" },
     { "id": "q06", "section": "hiring", "risk": "medium", "rule": null },
     { "id": "q07", "section": "socialSecurity", "risk": "high", "rule": "check.q07" },
-    { "id": "q08", "section": "socialSecurity", "risk": "high", "rule": "check.q08" },
+    { "id": "q08", "section": "socialSecurity", "risk": "high", "rule": "check.q08", "answers": "monthly" },
     { "id": "q09", "section": "socialSecurity", "risk": "high", "rule": "check.q09" },
     { "id": "q10", "section": "payrollTax", "risk": "medium", "rule": null },
-    { "id": "q11", "section": "payrollTax", "risk": "high", "rule": "check.q11" },
-    { "id": "q12", "section": "payrollTax", "risk": "high", "rule": "check.q12" },
+    { "id": "q11", "section": "payrollTax", "risk": "high", "rule": "check.q11", "answers": "partly" },
+    { "id": "q12", "section": "payrollTax", "risk": "high", "rule": "check.q12", "answers": "monthly" },
     { "id": "q13", "section": "leaveAttendance", "risk": "medium", "rule": null },
     { "id": "q14", "section": "leaveAttendance", "risk": "medium", "rule": "check.q14" },
     { "id": "q15", "section": "leaveAttendance", "risk": "medium", "rule": null },
     { "id": "q16", "section": "discipline", "risk": "high", "rule": "check.q16" },
     { "id": "q17", "section": "discipline", "risk": "high", "rule": "check.q17" },
     { "id": "q18", "section": "discipline", "risk": "medium", "rule": null },
-    { "id": "q19", "section": "endOfService", "risk": "high", "rule": "check.q19" },
-    { "id": "q20", "section": "endOfService", "risk": "medium", "rule": "check.q20" },
-    { "id": "q21", "section": "endOfService", "risk": "low", "rule": null }
+    { "id": "q19", "section": "endOfService", "risk": "high", "rule": "check.q19", "answers": "leavers" },
+    { "id": "q20", "section": "endOfService", "risk": "medium", "rule": "check.q20", "answers": "leavers" },
+    { "id": "q21", "section": "endOfService", "risk": "low", "rule": null, "answers": "leavers" }
   ]
 }
 </script>
@@ -583,19 +589,19 @@ export function isEmailShape(text) {
     "check": {
       "ui": {
         "headline": "ما مدى تنظيم ملفات موظفيك؟", "intro": "أجب عن أسئلة قصيرة لتحصل على صورة واضحة عن جاهزية الملفات.",
-        "sizeLabel": "حجم الشركة", "sizeRequired": "يرجى اختيار حجم الشركة أولا.", "sizes": { "small": "أقل من 50 موظفا", "medium": "من 50 إلى 200 موظف", "large": "أكثر من 200 موظف" },
+        "sizeLabel": "حجم الشركة", "sizeRequired": "يرجى اختيار حجم الشركة أولاً.", "sizes": { "small": "أقل من 50 موظفاً", "medium": "من 50 إلى 200 موظف", "large": "أكثر من 200 موظف" },
         "kurdistanNote": "هذه النسخة تخص العراق الاتحادي فقط. نخطط لنسخة منفصلة لإقليم كردستان.",
         "notSaved": "لا نحفظ إجاباتك.", "start": "ابدأ التحقق", "next": "التالي", "back": "السابق", "seeResult": "اعرض النتيجة",
-        "progress": "القسم {n} من {total}", "answers": { "yes": "نعم، لجميع الموظفين", "some": "لبعضهم", "no": "لا" },
+        "progress": "القسم {n} من {total}", "answers": { "yes": "نعم، لجميع الموظفين", "some": "لبعضهم", "no": "لا" }, "answerSets": { "monthly": { "yes": "نعم، كل شهر", "some": "في بعض الأشهر", "no": "لا" }, "partly": { "yes": "نعم", "some": "جزئياً", "no": "لا" }, "leavers": { "yes": "نعم، لكل من يترك العمل", "some": "لبعضهم", "no": "لا" } },
         "whyLabel": "لماذا يهم هذا؟", "required": "يرجى الإجابة عن: {question}", "langNote": "تغيير اللغة يبدأ التحقق من جديد.",
         "resultTitle": "نتيجة جاهزية الملفات", "overall": "الجاهزية العامة", "bands": {
           "green": { "name": "جاهز", "message": "جاهز: واصل العمل وراجع الملفات كل ربع سنة." },
-          "yellow": { "name": "جاهز جزئيا", "message": "جاهز جزئيا: بعض الثغرات قد تسبب مشكلات مع الموظفين أو الجهات المعنية لاحقا." },
-          "red": { "name": "يحتاج إلى اهتمام", "message": "هناك مخاطر: ابدأ بأهم 3 ثغرات هذا الشهر." }
+          "yellow": { "name": "جاهز جزئياً", "message": "جاهز جزئياً: بعض الثغرات قد تسبب مشكلات مع الموظفين أو الجهات المعنية لاحقاً." },
+          "red": { "name": "يحتاج إلى اهتمام", "message": "يحتاج إلى اهتمام: ابدأ بأهم 3 ثغرات هذا الشهر." }
         },
-        "topGaps": "أهم الثغرات", "noGaps": "لم نجد ثغرات في إجاباتك.", "commonGap": "هذه ثغرة شائعة لدى معظم الشركات، ويمكن معالجتها خطوة بخطوة.",
+        "topGaps": "أهم الثغرات", "noGaps": "لم نجد ثغرات في إجاباتك.", "commonGap": "يمكن معالجة هذه الثغرات خطوة بخطوة.",
         "openReport": "افتح التقرير الكامل", "reportTitle": "تقرير جاهزية ملفات الموظفين", "reportDate": "تاريخ التحقق", "reportSize": "حجم الشركة",
-        "fixLabel": "خطوة عملية", "basisLabel": "الأساس القانوني", "goodPractice": "ممارسة جيدة", "beingVerified": "قيد التحقق", "actionList": "خلال الثلاثين يوماً القادمة", "actionLater": "لاحقاً", "print": "اطبع أو احفظ PDF",
+        "fixLabel": "خطوة عملية", "basisLabel": "الأساس القانوني", "goodPractice": "ممارسة جيدة", "articleFormat": "المادة {n}", "articleParts": ["أولاً", "ثانياً", "ثالثاً", "رابعاً", "خامساً"], "sourceLabel": "المصدر", "actionList": "خلال الثلاثين يوماً القادمة", "actionLater": "لاحقاً", "print": "اطبع أو احفظ PDF",
         "disclaimer": "هذا تحقق إرشادي، وليس استشارة قانونية.", "closing": "إذا رغبت في مناقشة النتيجة، راسلني عبر LinkedIn."
       },
       "sections": { "contracts": "العقود", "hiring": "التعيين", "socialSecurity": "الضمان الاجتماعي", "payrollTax": "الرواتب والضريبة", "leaveAttendance": "الإجازات والحضور", "discipline": "الإجراءات الانضباطية", "endOfService": "نهاية الخدمة" },
@@ -607,22 +613,22 @@ export function isEmailShape(text) {
         "q05": { "text": "هل تسجل تواريخ بدء وانتهاء فترة التجربة لكل موظف جديد؟", "why": "من دون تواريخ مسجلة لا يُعرف متى انتهت فترة التجربة، فقد يأتي القرار بشأن الموظف متأخراً.", "gapSome": "تواريخ فترة التجربة غير مسجلة لبعض الموظفين.", "gapNo": "لا تُسجَّل تواريخ فترة التجربة للموظفين الجدد.", "fix": "أضف حقلي البداية والنهاية إلى سجل التعيين." },
         "q06": { "text": "هل يوجد ملف واحد لكل موظف في مكان واحد؟", "why": "عندما تتوزع الوثائق لا يُكتشف النقص إلا عندما يطلبها تفتيش أو نزاع.", "gapSome": "وثائق بعض الموظفين موزعة بين أماكن مختلفة.", "gapNo": "وثائق الموظفين موزعة على أماكن مختلفة، ولا يوجد ملف واحد لكل موظف.", "fix": "اجمع وثائق كل موظف في ملف موحد." },
         "q07": { "text": "هل جميع الموظفين مسجلون في منصة الضمان الاجتماعي الإلكترونية؟", "why": "الموظف غير المسجل لا تُحتسب له خدمة مضمونة، وقد تتحمل الشركة مبالغ متراكمة عند اكتشاف ذلك.", "gapSome": "تسجيل بعض الموظفين في المنصة غير مكتمل.", "gapNo": "الموظفون غير مسجلين في منصة الضمان الاجتماعي الإلكترونية.", "fix": "طابق قائمة الموظفين مع سجل المنصة وأكمل التسجيلات." },
-        "q08": { "text": "هل تقدم الاشتراكات كل شهر في موعدها؟", "why": "تأخر الاشتراكات قد يضيف كلفة على الشركة ويترك فجوات في سجل الموظف التأميني.", "gapSome": "بعض الاشتراكات الشهرية لم تقدم في موعدها.", "gapNo": "الاشتراكات الشهرية لا تُقدَّم في وقتها.", "fix": "ضع تذكيرا شهريا وتحقق من إثبات التقديم." },
+        "q08": { "text": "هل تقدم الاشتراكات كل شهر في موعدها؟", "why": "تأخر الاشتراكات قد يضيف كلفة على الشركة ويترك فجوات في سجل الموظف التأميني.", "gapSome": "بعض الاشتراكات الشهرية لم تقدم في موعدها.", "gapNo": "الاشتراكات الشهرية لا تُقدَّم في وقتها.", "fix": "ضع تذكيراً شهرياً وتحقق من إثبات التقديم." },
         "q09": { "text": "هل يسجل الموظفون الجدد خلال الفترة المطلوبة؟", "why": "إلى أن يُسجَّل الموظف الجديد لا تُحتسب خدمته، واللحاق بالتسجيل لاحقاً يتطلب جهداً أكبر.", "gapSome": "تسجيل بعض الموظفين الجدد تأخر عن الفترة المطلوبة.", "gapNo": "الموظفون الجدد لا يُسجَّلون خلال المدة المطلوبة.", "fix": "أضف خطوة التسجيل إلى إجراءات التعيين وتابع إتمامها." },
         "q10": { "text": "هل يحصل كل موظف على كشف راتب كل شهر؟", "why": "من دون كشف راتب لا يستطيع الموظف التحقق من أجره، فتمر الأخطاء دون ملاحظة وتصل الأسئلة إلى الموارد البشرية.", "gapSome": "بعض الموظفين لا يحصلون على كشف راتب شهري.", "gapNo": "الموظفون لا يستلمون كشف راتب شهرياً.", "fix": "أصدر كشف راتب لكل موظف عند إعداد الرواتب." },
         "q11": { "text": "هل تحسب ضريبة الدخل على أساس سنوي مع السماحات الصحيحة؟", "why": "الحساب الخاطئ يعني أن الموظف يدفع ضريبة أكثر أو أقل من المستحق، وتصحيح ذلك لاحقاً أصعب على الجميع.", "gapSome": "حساب الضريبة أو السماحات يحتاج إلى مراجعة.", "gapNo": "ضريبة الدخل لا تُحسب على أساس سنوي مع السماحات الصحيحة.", "fix": "راجع طريقة الحساب والسماحات مع المختص قبل اعتماد الرواتب." },
         "q12": { "text": "هل تدفع الضريبة المستقطعة إلى الجهة الضريبية في موعدها كل شهر؟", "why": "تأخر تسديد الضريبة المستقطعة قد يرتب كلفة إضافية على الشركة، مع أن المبلغ اقتُطع من الرواتب فعلاً.", "gapSome": "بعض دفعات الضريبة المستقطعة لا تسدد في موعدها.", "gapNo": "الضريبة المستقطعة لا تُسدَّد إلى الجهة الضريبية في وقتها.", "fix": "طابق سجل الاستقطاعات مع إثباتات الدفع كل شهر." },
         "q13": { "text": "هل يوجد سجل لرصيد إجازات كل موظف؟", "why": "من دون سجل للرصيد تتحول طلبات الإجازة إلى خلافات، ويصعب احتساب الإجازات غير المستخدمة عند ترك العمل.", "gapSome": "رصيد الإجازات غير مسجل لبعض الموظفين.", "gapNo": "لا يوجد سجل لرصيد إجازات الموظفين.", "fix": "أنشئ سجل رصيد منفصل لكل موظف وحدثه عند كل إجازة." },
-        "q14": { "text": "هل تتبع الإجازات الخاصة، مثل الزواج والوفاة والأمومة، بصورة منفصلة عن الإجازة السنوية؟", "why": "احتساب الإجازة الخاصة من السنوية ينقص رصيد الموظف السنوي خطأً.", "gapSome": "بعض الإجازات الخاصة مسجلة ضمن الإجازة السنوية.", "gapNo": "الإجازات الخاصة تُسجَّل ضمن الإجازة السنوية.", "fix": "خصص نوعا مستقلا لكل إجازة في السجل." },
+        "q14": { "text": "هل تتبع الإجازات الخاصة، مثل الزواج والوفاة والأمومة، بصورة منفصلة عن الإجازة السنوية؟", "why": "احتساب الإجازة الخاصة من السنوية ينقص رصيد الموظف السنوي خطأً.", "gapSome": "بعض الإجازات الخاصة مسجلة ضمن الإجازة السنوية.", "gapNo": "الإجازات الخاصة تُسجَّل ضمن الإجازة السنوية.", "fix": "خصص نوعاً مستقلاً لكل إجازة في السجل." },
         "q15": { "text": "هل تحتفظ بسجلات الحضور وتطابقها مع الرواتب كل شهر؟", "why": "عدم المطابقة يعني أن الأجر قد يُقتطع أو يُدفع عن أيام لا تطابق الحضور الفعلي.", "gapSome": "سجلات الحضور لا تطابق الرواتب بانتظام.", "gapNo": "سجلات الحضور لا تُحفظ أو لا تُطابق مع الرواتب.", "fix": "راجع سجل الحضور مقابل كشف الرواتب قبل اعتماده." },
         "q16": { "text": "هل تصدر الجزاءات خلال المهلة القانونية من تاريخ العلم بالمخالفة؟", "why": "العقوبة التي تصدر متأخرة قد يُطعن فيها وتُلغى، حتى لو كانت المخالفة ثابتة.", "gapSome": "توقيت بعض الجزاءات غير موثق أو يحتاج إلى مراجعة.", "gapNo": "توقيت العقوبات لا يُتابَع من تاريخ العلم بالمخالفة.", "fix": "سجل تاريخ العلم بالمخالفة وراجع المهلة المطلوبة قبل الإجراء." },
-        "q17": { "text": "هل تتاح للموظف فرصة مكتوبة للدفاع عن نفسه أولا؟", "why": "العقوبة التي تصدر دون رد مكتوب من الموظف يصعب الدفاع عنها إذا اعتُرض عليها.", "gapSome": "رد الموظف المكتوب غير موجود في بعض الملفات.", "gapNo": "لا يُمنح الموظف فرصة مكتوبة للرد قبل العقوبة.", "fix": "اطلب رد الموظف كتابة قبل اتخاذ القرار واحفظه في الملف." },
+        "q17": { "text": "هل يُمنح الموظف فرصة للدفاع عن نفسه قبل فرض أي عقوبة؟", "why": "العقوبة التي تصدر دون رد مكتوب من الموظف يصعب الدفاع عنها إذا اعتُرض عليها.", "gapSome": "رد الموظف المكتوب غير موجود في بعض الملفات.", "gapNo": "لا يُمنح الموظف فرصة مكتوبة للرد قبل العقوبة.", "fix": "اطلب رد الموظف كتابة قبل اتخاذ القرار واحفظه في الملف." },
         "q18": { "text": "هل يوثق كل جزاء في الملف الشخصي للموظف؟", "why": "العقوبة غير الموثقة لا يمكن الاستناد إليها لاحقاً، مثلاً عندما تتكرر المخالفة.", "gapSome": "بعض الجزاءات غير موثقة في ملفات الموظفين.", "gapNo": "العقوبات لا تُوثَّق في ملفات الموظفين.", "fix": "أضف نسخة من كل قرار إلى ملف الموظف المعني." },
         "q19": { "text": "هل تسوى المستحقات النهائية في موعدها؟", "why": "تأخر المستحقات النهائية يترك الموظف السابق بانتظار حقه، وغالباً ما ينتهي بشكوى.", "gapSome": "بعض التسويات النهائية لم تكتمل في موعدها.", "gapNo": "المستحقات النهائية لا تُسوّى في وقتها.", "fix": "جهز قائمة بالمستحقات وراجع إتمام التسوية عند المغادرة." },
         "q20": { "text": "هل تعطى شهادة خدمة عند مغادرة الموظف؟", "why": "من دون شهادة خدمة يصعب على الموظف السابق إثبات خبرته لدى جهة عمل جديدة.", "gapSome": "لم يحصل بعض المغادرين على شهادة خدمة.", "gapNo": "المغادرون لا يستلمون شهادة خدمة.", "fix": "أضف إصدار شهادة الخدمة إلى قائمة إجراءات المغادرة." },
         "q21": { "text": "هل يوثق تسليم ممتلكات الشركة عند المغادرة؟", "why": "من دون محضر تسليم لا يمكن تتبع المعدات الناقصة، وقد تتعطل التسوية مع الموظف المغادر.", "gapSome": "تسليم بعض ممتلكات الشركة غير موثق.", "gapNo": "تسليم ممتلكات الشركة لا يُوثَّق.", "fix": "استخدم نموذج تسليم بسيط واحفظه في ملف الموظف." }
       },
-      "form": { "title": "اطلب متابعة", "email": "البريد الإلكتروني", "emailError": "أدخل بريدا إلكترونيا صحيحا.", "optionalQuestion": "ما أكثر ما يتعبك في ملفات الموظفين؟", "consent": "أوافق على إرسال بيانات هذا النموذج للتواصل معي.", "consentError": "يرجى الموافقة قبل الإرسال.", "sends": "يرسل هذا النموذج بريدك الإلكتروني وموافقتك والنتيجة العامة وحجم الشركة وإجابتك الاختيارية، إن وجدت. لا يرسل إجابات التحقق الفردية.", "submit": "أرسل الطلب", "sending": "جارٍ الإرسال…", "success": "تم إرسال طلبك.", "failure": "تعذر إرسال الطلب. حاول مرة أخرى." }
+      "form": { "title": "اطلب متابعة", "email": "البريد الإلكتروني", "emailError": "أدخل بريداً إلكترونياً صحيحاً.", "optionalQuestion": "ما أكثر ما يتعبك في ملفات الموظفين؟", "consent": "أوافق على إرسال بيانات هذا النموذج للتواصل معي.", "consentError": "يرجى الموافقة قبل الإرسال.", "sends": "يرسل هذا النموذج بريدك الإلكتروني وموافقتك والنتيجة العامة وحجم الشركة وإجابتك الاختيارية، إن وجدت. لا يرسل إجابات التحقق الفردية.", "submit": "أرسل الطلب", "sending": "جارٍ الإرسال…", "success": "تم إرسال طلبك.", "failure": "تعذر إرسال الطلب. حاول مرة أخرى." }
     },
     "laws": {
       "Law 18/2023": "قانون التقاعد والضمان الاجتماعي للعمال رقم 18 لسنة 2023",
@@ -637,16 +643,16 @@ export function isEmailShape(text) {
         "sizeLabel": "Company size", "sizeRequired": "Please choose your company size first.", "sizes": { "small": "Under 50", "medium": "50 to 200", "large": "Over 200" },
         "kurdistanNote": "This version covers federal Iraq only. A separate Kurdistan Region version is planned.",
         "notSaved": "Your answers are not saved.", "start": "Start check", "next": "Next", "back": "Back", "seeResult": "See result",
-        "progress": "Section {n} of {total}", "answers": { "yes": "Yes, for all employees", "some": "For some", "no": "No" },
+        "progress": "Section {n} of {total}", "answers": { "yes": "Yes, for all employees", "some": "For some", "no": "No" }, "answerSets": { "monthly": { "yes": "Yes, every month", "some": "Some months", "no": "No" }, "partly": { "yes": "Yes", "some": "Partly", "no": "No" }, "leavers": { "yes": "Yes, for all leavers", "some": "For some", "no": "No" } },
         "whyLabel": "Why this matters:", "required": "Please answer: {question}", "langNote": "Changing language starts the check again.",
         "resultTitle": "Your file readiness result", "overall": "Overall readiness", "bands": {
           "green": { "name": "Ready", "message": "Ready: keep it up and review every quarter." },
           "yellow": { "name": "Partly ready", "message": "Partly ready: some gaps can cause problems with employees or the authorities later." },
           "red": { "name": "At risk", "message": "At risk: start with the top 3 gaps this month." }
         },
-        "topGaps": "Top gaps", "noGaps": "No gaps found in your answers.", "commonGap": "Most companies have this gap, and it can be addressed step by step.",
+        "topGaps": "Top gaps", "noGaps": "No gaps found in your answers.", "commonGap": "These gaps can be fixed step by step.",
         "openReport": "Open full report", "reportTitle": "Employee file readiness report", "reportDate": "Check date", "reportSize": "Company size",
-        "fixLabel": "Practical step", "basisLabel": "Legal basis", "goodPractice": "Good practice", "beingVerified": "being verified", "actionList": "Next 30 days", "actionLater": "Later", "print": "Print / Save PDF",
+        "fixLabel": "Practical step", "basisLabel": "Legal basis", "goodPractice": "Good practice", "articleFormat": "Article {n}", "articleParts": ["first", "second", "third", "fourth", "fifth"], "sourceLabel": "Source", "actionList": "Next 30 days", "actionLater": "Later", "print": "Print / Save PDF",
         "disclaimer": "This is a guidance check, not legal advice.", "closing": "If you would like to discuss your result, message me on LinkedIn."
       },
       "sections": { "contracts": "Contracts", "hiring": "Hiring", "socialSecurity": "Social security", "payrollTax": "Payroll and tax", "leaveAttendance": "Leave and attendance", "discipline": "Discipline", "endOfService": "End of service" },
@@ -667,7 +673,7 @@ export function isEmailShape(text) {
         "q14": { "text": "Are special leaves (marriage, bereavement, maternity) tracked separately from annual leave?", "why": "Counting special leave as annual leave reduces the employee's annual balance by mistake.", "gapSome": "Some special leave is included in annual leave records.", "gapNo": "Special leave is recorded as annual leave.", "fix": "Give each leave type its own category in the record." },
         "q15": { "text": "Are attendance records kept and matched with payroll each month?", "why": "Unmatched records mean pay can be cut or paid for days that do not match actual attendance.", "gapSome": "Attendance and payroll are not matched regularly.", "gapNo": "Attendance records are not kept or not matched with payroll.", "fix": "Compare attendance records with payroll before approval." },
         "q16": { "text": "Are penalties issued within the legal deadline from when the violation became known?", "why": "A penalty issued too late can be challenged and cancelled, even if the violation was real.", "gapSome": "Some penalty dates are unrecorded or need review.", "gapNo": "Penalty timing is not tracked from when the violation became known.", "fix": "Record when the violation became known and check the required period before acting." },
-        "q17": { "text": "Does the employee get a written chance to defend themselves first?", "why": "A penalty issued without the employee's written response is hard to defend if it is challenged.", "gapSome": "Some files lack the employee's written response.", "gapNo": "Employees are not given a written chance to respond before a penalty.", "fix": "Invite a written response before deciding and keep it in the file." },
+        "q17": { "text": "Does the employee get a chance to defend themselves before any penalty?", "why": "A penalty issued without the employee's written response is hard to defend if it is challenged.", "gapSome": "Some files lack the employee's written response.", "gapNo": "Employees are not given a written chance to respond before a penalty.", "fix": "Invite a written response before deciding and keep it in the file." },
         "q18": { "text": "Is every penalty documented in the personnel file?", "why": "An undocumented penalty cannot be relied on later, for example when the same violation happens again.", "gapSome": "Some penalties are missing from employee files.", "gapNo": "Penalties are not documented in personnel files.", "fix": "Add each decision to the relevant employee file." },
         "q19": { "text": "Are final dues settled on time?", "why": "Late final dues leave the former employee waiting for money they are owed, which often leads to complaints.", "gapSome": "Some final settlements were not completed on time.", "gapNo": "Final dues are not settled on time.", "fix": "Prepare a dues checklist and confirm settlement on departure." },
         "q20": { "text": "Is a service certificate given on leaving?", "why": "Without a service certificate, the former employee cannot easily prove their experience to a new employer.", "gapSome": "Some leavers did not receive a service certificate.", "gapNo": "Leavers do not receive a service certificate.", "fix": "Add certificate issue to the departure checklist." },
@@ -683,6 +689,7 @@ export function isEmailShape(text) {
 }
 </script>
 <script type="module">
+const LINKEDIN_URL = 'https://www.linkedin.com/in/hassan-mahdi/';
 const FORM_ENDPOINT = 'https://formspree.io/f/mdegpejn';
 
 async function sendForm(fields) {
@@ -698,12 +705,12 @@ async function sendForm(fields) {
 
 let loadedRules;
 let strings;
-let scoreCheck, band, orderGaps, gapKey, legalBasis, basisStatus, splitActions, isEmailShape;
+let scoreCheck, band, orderGaps, gapKey, legalBasis, basisStatus, splitActions, formatArticle, isEmailShape;
 try {
   strings = JSON.parse(document.getElementById('strings-data').textContent);
   loadedRules = JSON.parse(document.getElementById('rules-data').textContent);
   const url = URL.createObjectURL(new Blob([document.getElementById('pure-module').textContent], { type: 'text/javascript' }));
-  try { ({ scoreCheck, band, orderGaps, gapKey, legalBasis, basisStatus, splitActions, isEmailShape } = await import(url)); }
+  try { ({ scoreCheck, band, orderGaps, gapKey, legalBasis, basisStatus, splitActions, formatArticle, isEmailShape } = await import(url)); }
   finally { URL.revokeObjectURL(url); }
 } catch { /* The check view remains unavailable if its data cannot load. */ }
 
@@ -781,7 +788,12 @@ function initCheck(prefix, s, checkData, rulesDoc) {
       const question = checkData.questions.find(entry => entry.id === gap.id);
       const basis = legalBasis(question, rulesDoc);
       const status = basisStatus(question, rulesDoc);
-      add(item, 'p', `${ui.basisLabel}: ${status === 'verified' ? `${s.laws[basis.law]} · ${basis.article}` : status === 'pending' ? ui.beingVerified : ui.goodPractice}`);
+      if (status === 'none') add(item, 'p', `${ui.basisLabel}: ${ui.goodPractice}`);
+      else if (status === 'verified') {
+        const line = add(item, 'p', `${ui.basisLabel}: ${s.laws[basis.law]} · ${formatArticle(basis.article, ui.articleFormat, ui.articleParts)} · `);
+        const source = add(line, 'a', ui.sourceLabel);
+        source.href = basis.sourceUrl; source.target = '_blank'; source.rel = 'noopener';
+      }
     }
     return item;
   };
@@ -867,8 +879,9 @@ function initCheck(prefix, s, checkData, rulesDoc) {
         fieldset.id = prefix + question.id;
         add(fieldset, 'legend', `${Number(question.id.slice(1))}. ${s.check.questions[question.id].text}`);
         const choices = add(fieldset, 'div', null, 'check-choices');
+        const labels = question.answers ? ui.answerSets[question.answers] : ui.answers;
         for (const key of ['yes', 'some', 'no']) {
-          const button = add(choices, 'button', ui.answers[key], 'check-choice');
+          const button = add(choices, 'button', labels[key], 'check-choice');
           button.type = 'button'; button.setAttribute('aria-pressed', String(answers[question.id] === key));
           button.addEventListener('click', () => {
             answers[question.id] = key;
@@ -927,7 +940,11 @@ function initCheck(prefix, s, checkData, rulesDoc) {
       followUp(root, score);
       add(root, 'p', ui.disclaimer, 'disclaimer');
       if (screen === 'report') add(root, 'p', lang === 'ar' ? 'حسن مهدي' : 'Hasan Mahdi');
-      add(root, 'p', ui.closing);
+      const closing = add(root, 'p');
+      const [before, after = ''] = ui.closing.split('LinkedIn');
+      const profile = make('a', 'LinkedIn');
+      profile.href = LINKEDIN_URL; profile.target = '_blank'; profile.rel = 'noopener'; profile.lang = 'en';
+      closing.append(before, profile, after);
     }
     if (screen !== 'start') note(root);
     if (moveFocus) h.focus({ preventScroll: true });
